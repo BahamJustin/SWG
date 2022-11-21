@@ -57,6 +57,7 @@ class Planet(BaseTable):
     pass
 
 class User(Actor):
+    id = IntegerField(null=False, default=1, unique=True)
     pass
 
 class playerInventory(Item):

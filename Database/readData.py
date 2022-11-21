@@ -1,9 +1,11 @@
 import os
-from schema import *
 from os import *
 import random
 import names
 import psycopg2
+from consolemenu import *
+from consolemenu.items import *
+from Database.schema import *
 
 planetTemplate = "{planet.name}"
 actorTemplate = "{actor.name} {actor.race} {actor.homePlanet}"
@@ -17,14 +19,18 @@ def viewAllPlanets():
     for planet in Planet.select():
         print(planetTemplate.format(planet=planet))
 
+    Screen().input('Press [Enter] to continue')
+
     pg_db.close()
 
-def settlementByPlanet(planet):
+def settlementsByPlanet(planet):
     print("Settlements of " + planet)
     print("-" * 35)
 
     for settlement in Settlement.select().where(Settlement.homePlanet == planet):
         print(settleTemplate.format(settlement=settlement))
+
+    Screen().input('Press [Enter] to continue')
 
     pg_db.close()
 
@@ -35,14 +41,18 @@ def viewAllActors():
     for actor in Actor.select():
         print(actorTemplate.format(actor=actor))
 
+    Screen().input('Press [Enter] to continue')
+
     pg_db.close()
 
-def actorByPlanet(planet):
+def actorsByPlanet(planet):   
     print("All Inhabitants of " + planet)
     print("-" * 35)
 
     for actor in Actor.select().where(Actor.homePlanet == planet):
         print(actorTemplate.format(actor=actor))
+
+    Screen().input('Press [Enter] to continue')
 
     pg_db.close()
         
@@ -53,6 +63,6 @@ def viewAllItems():
     for item in Item.select():
         print(itemTemplate.format(item=item))
 
-    pg_db.close()
+    Screen().input('Press [Enter] to continue')
 
-viewAllItems()
+    pg_db.close()

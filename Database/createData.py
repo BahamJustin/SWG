@@ -1,13 +1,10 @@
 import os
-from schema import *
+from Database.schema import *
 from os import *
 import random
 import names
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-
-conn = psycopg2.connect(host='localhost', user='postgres', password='Saints504!')
-cur = conn.cursor()
 
 def randNum():
     print(random.randrange(20, 65))
@@ -55,13 +52,16 @@ playerinventory = []
 models = ([Planet, Settlement, Actor, Item, Faction, Event, User, playerInventory])
 
 def newDatabase():
+    conn = psycopg2.connect(host='localhost', user='postgres', password='Saints504!')
+    cur = conn.cursor()
+
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cur.execute("DROP DATABASE IF EXISTS galaxy")
     cur.execute('CREATE DATABASE galaxy')
-    
+
     conn.close()
     
-def newGalaxy():
+def genGalaxy():
     pg_db.drop_tables(models)
     pg_db.create_tables(models)
 
@@ -107,11 +107,17 @@ def newGalaxy():
         Event.create(
             name=event
         )
-    
-    pg_db.close()
+
+        pg_db.close()
+
+def newUser(name, race, homePlanet):
+    pg_db.drop_tables(User)
+    User.create(
+        name=name,
+        race=race,
+        homePlanet=homePlanet
+    )
 
 def newGame():
     newDatabase()
-    newGalaxy()
-
-newGame()
+    genGalaxy()
