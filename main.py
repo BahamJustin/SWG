@@ -11,9 +11,108 @@ from Database.createData import *
 from Database.readData import *
 import psycopg2
 
-def createUser():
-    name = input("Type your name: ")
+def progressTime():
+    # enter date into database for a default starting date
 
+    # update date and update database everytime
+    pass 
+
+def relationMenu():
+    menu = input("""
+        1. View Family
+        2. Friends/Rivals
+        3. All
+        4. Search
+        5. Back to Main Menu
+        
+        Choose an option: """)
+
+    if menu == "1":
+        print("")
+        viewFamily(User.get().familyName)
+    elif menu == "2":
+        pass
+    elif menu == "3":
+        pass
+    elif menu == "4":
+        pass
+    elif menu == "5":
+        pass
+    else:
+        relationMenu()
+
+def actionMenu():
+    menu = input("""
+        1. Skill Training
+        2. Back To Main Menu
+        
+        Choose an option: """)
+    
+    if menu == "1":
+        pass
+    elif menu == "2":
+        pass
+    else:
+        actionMenu()
+
+def planetMenu():
+    menu = input("""
+        1. Starport
+        2. Back To Main Menu
+        
+        Choose an option: """)
+    
+    if menu == "1":
+        pass
+    elif menu == "2":
+        pass
+    else:
+        planetMenu()
+    
+def playerCard():
+    # add the rest of the skills
+    userDetails = User.get()
+
+    playerName = userDetails.name
+    playerFamily = userDetails.familyName
+    playerRace = userDetails.race
+    playerHomePlanet = userDetails.homePlanet
+    # more player info - companions?
+    cardString = f"""
+        Name: {playerName} {playerFamily}
+        Race: {playerRace}
+        Home Planet: {playerHomePlanet}"""
+    print(cardString)
+
+    # add an inventory
+    # add equiupment - ability to equip items
+    # check skill numbers
+    charMenu = input("""
+        1. Inventory
+        2. Equipment
+        3. Skills
+        4. Back to Main Menu
+        
+        Choose an option: """)
+
+    if charMenu == "1":
+        pass
+    elif charMenu == "2":
+        pass
+    elif charMenu == "3":
+        pass
+    elif charMenu == "4":
+        pass
+    else:
+        playerCard()
+
+def createUser():
+    # random gen names
+    name = input("Enter your name: ")
+
+    familyName = input("Enter Your Family Name: ")
+
+    # add more races - race stat bonuses
     race = input("""
         1.Human     2.Human
         2.Human     3.Human
@@ -21,6 +120,7 @@ def createUser():
         
         Choose a race: """)
 
+    # make genuine list of planets - planet bonuses
     homePlanet = input("""
         1.Tatooine      2.Jakku
         3.Geonosis      4.Pasana
@@ -32,49 +132,48 @@ def createUser():
         print("dumbass")
         createUser()
     else:
-        newUser(name, race, homePlanet)
-
-    # if 'name' in locals():
-    #     print(name + " Exists")
-    # elif 'name' == "Justin":
-    #     print("dumbass")
-    # elif name == "":
-    #     print("empty")
+        newUser(name, familyName, race, homePlanet)
 
 def newGameMenu():
     print("Are You Sure?")
 
     choice = input("""
-                        Confirm (Y)es or (N)o
-                        
-                        """)
+        Confirm (Y)es or (N)o: """)
     
     if choice == "Y" or choice == "y":
         newGame()
         createUser()
     elif choice == "N" or choice == 'n':
         return
+    else:
+        print("dumbass")
+        newGameMenu()
 
 def main():
     print("")
-    print("SWG")
+    print("S.W.G")
     print("")
 
-    if User.name in locals():
-        print("Name Here")
+    # Current situation Info on main screen
 
+    # Settlement menu - locations
+    #  Action menu?
     choice = input("""
-        1. Show Name
+        1. My Character
+        2. Relationships
+        3. Actions
+        4. Planet
         N. New Game?
         Q: Exit Game
 
         Please enter your choice: """)
 
     if choice == "1":
+        playerCard()
         main()
-        pass
     elif choice == "2":
-        pass
+        relationMenu()
+        main()
     elif choice == "3":
         pass
     elif choice == "N" or choice == "n":
@@ -83,17 +182,13 @@ def main():
     elif choice == "q" or choice == "Q":
         pass
     else:
-        pass
+        print("dumbass")
+        main()
 
 def databaseExist():
     connection = None
     try:
-        # In PostgreSQL, default username is 'postgres' and password is 'postgres'.
-        # And also there is a default database exist named as 'postgres'.
-        # Default host is 'localhost' or '127.0.0.1'
-        # And default port is '54322'.
         connection = psycopg2.connect(host='localhost', user='postgres', password='Saints504!')
-
     except:
         print('Database not connected.')
 
@@ -107,6 +202,7 @@ def databaseExist():
         list_database = cur.fetchall()
 
         if ("galaxy",) in list_database:
+            print("Galaxy Loaded")
             main()
         else:
             print("Starting a new game")

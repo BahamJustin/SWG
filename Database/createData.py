@@ -1,5 +1,6 @@
 import os
 from Database.schema import *
+# from schema import *
 from os import *
 import random
 import names
@@ -86,9 +87,11 @@ def genGalaxy():
                     name="Second",
                     homePlanet=planet
                 )
-        for actor in range(5):
+        for actor in range(5):\
+            # create star wars name gen
             Actor.create(
             name=names.get_first_name(),
+            familyName=names.get_last_name(),
             race=random.choice(race),
             homePlanet=planet
             )
@@ -110,14 +113,23 @@ def genGalaxy():
 
         pg_db.close()
 
-def newUser(name, race, homePlanet):
+def newUser(name, familyName, race, homePlanet):
     pg_db.drop_tables(User)
     User.create(
         name=name,
+        familyName=familyName,
         race=race,
         homePlanet=homePlanet
     )
+    for actor in range(2):
+        Actor.create(
+            name=names.get_first_name(),
+            familyName=familyName,
+            race=race,
+            homePlanet=homePlanet,
+        )
 
 def newGame():
     newDatabase()
     genGalaxy()
+

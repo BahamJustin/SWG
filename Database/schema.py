@@ -24,6 +24,7 @@ class Event(BaseTable):
     pass
 
 class Actor(BaseTable):
+    familyName = CharField(null=False, index=True)
     race = CharField(null=False, index=True)
     # age = IntegerField(null=False, index=True)
     # homePlanet = ForeignKeyField(Planet, backref='Actors')
@@ -63,3 +64,5 @@ class User(Actor):
 class playerInventory(Item):
     pass
 
+class Companion(Actor):
+    pass

@@ -8,7 +8,7 @@ from consolemenu.items import *
 from Database.schema import *
 
 planetTemplate = "{planet.name}"
-actorTemplate = "{actor.name} {actor.race} {actor.homePlanet}"
+actorTemplate = "{actor.name} {actor.familyName} {actor.race} {actor.homePlanet}"
 settleTemplate = "{settlement.name} {settlement.homePlanet}"
 itemTemplate = "{item.name}"
 
@@ -62,6 +62,17 @@ def viewAllItems():
 
     for item in Item.select():
         print(itemTemplate.format(item=item))
+
+    Screen().input('Press [Enter] to continue')
+
+    pg_db.close()
+
+def viewFamily(familyName):
+    print("Family Members")
+    print("-" * 35)
+
+    for actor in Actor.select().where(Actor.familyName == familyName):
+        print(actorTemplate.format(actor=actor))
 
     Screen().input('Press [Enter] to continue')
 
