@@ -9,6 +9,7 @@ from consolemenu import SelectionMenu
 from consolemenu.items import *
 from Database.createData import *
 from Database.readData import *
+from Database.updateData import *
 import psycopg2
 
 def progressTime():
@@ -29,7 +30,7 @@ def relationMenu():
 
     if menu == "1":
         print("")
-        viewFamily(User.get().familyName)
+        viewFamily(Actor.get().familyName)
     elif menu == "2":
         pass
     elif menu == "3":
@@ -69,6 +70,7 @@ def planetMenu():
     else:
         planetMenu()
     
+
 def playerCard():
     # add the rest of the skills
     userDetails = User.get()
@@ -153,6 +155,10 @@ def main():
     print("")
     print("S.W.G")
     print("")
+    try:
+        getDate()
+    except:
+        pass
 
     # Current situation Info on main screen
 
@@ -161,7 +167,7 @@ def main():
     choice = input("""
         1. My Character
         2. Relationships
-        3. Actions
+        3. Actions/advance time
         4. Planet
         N. New Game?
         Q: Exit Game
@@ -175,7 +181,8 @@ def main():
         relationMenu()
         main()
     elif choice == "3":
-        pass
+        advanceTime()
+        main()
     elif choice == "N" or choice == "n":
         newGameMenu()
         main()

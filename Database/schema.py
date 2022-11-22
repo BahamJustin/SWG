@@ -66,3 +66,11 @@ class playerInventory(Item):
 
 class Companion(Actor):
     pass
+
+class Date(Model):
+    id = IntegerField(null=False, default=1, unique=True)
+    month = IntegerField(null=False, index=True, default=1)
+    year = IntegerField(null=False, index=True, default=4)
+
+    class Meta:
+        database = pg_db

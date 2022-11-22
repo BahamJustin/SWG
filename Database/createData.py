@@ -50,7 +50,7 @@ events = (
 
 playerinventory = []
 
-models = ([Planet, Settlement, Actor, Item, Faction, Event, User, playerInventory])
+models = ([Planet, Settlement, Actor, Item, Faction, Event, User, playerInventory, Date])
 
 def newDatabase():
     conn = psycopg2.connect(host='localhost', user='postgres', password='Saints504!')
@@ -111,7 +111,12 @@ def genGalaxy():
             name=event
         )
 
-        pg_db.close()
+    Date.create(
+        month=1,
+        year=4
+    )
+
+    pg_db.close()
 
 def newUser(name, familyName, race, homePlanet):
     pg_db.drop_tables(User)
