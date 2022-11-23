@@ -26,28 +26,31 @@ class Event(BaseTable):
 class Actor(BaseTable):
     familyName = CharField(null=False, index=True)
     race = CharField(null=False, index=True)
-    # age = IntegerField(null=False, index=True)
-    # homePlanet = ForeignKeyField(Planet, backref='Actors')
+    age = IntegerField(null=False, index=True)
     homePlanet = CharField(null=False, index=True)
     # profession = CharField(null=False, index=True)
     # forceSensitivity = BooleanField(null=False, index=True)
     # forceSkill = IntegerField(null=False, index=True)
-    # meleeSkill = IntegerField(null=False, index=True)
-    # rangedSkill = IntegerField(null=False, index=True)
-    # agilitySkill = IntegerField(null=False, index=True)
-    # pilotingSkill = IntegerField(null=False, index=True)
-    # stealthSkill = IntegerField(null=False, index=True)
-    # tradeSkill = IntegerField(null=False, index=True)
-    # # smugglingSkill = IntegerField(null=False, index=True)
-    # leadershipSkiil = IntegerField(null=False, index=True)
-    # strategySkill = IntegerField(null=False, index=True)
-    # medicalSkill = IntegerField(null=False, index=True)
-    # trackingSkill = IntegerField(null=False, index=True)
-    # survivalSkill = IntegerField(null=False, index=True)
-    # trappingSkill = IntegerField(null=False, index=True)
-    # # engineeringSkill = IntegerField(null=False, index=True)
+    meleeSkill = IntegerField(null=False, index=True)
+    rangedSkill = IntegerField(null=False, index=True)
+    agilitySkill = IntegerField(null=False, index=True)
+    pilotingSkill = IntegerField(null=False, index=True)
+    stealthSkill = IntegerField(null=False, index=True)
+    tradeSkill = IntegerField(null=False, index=True)
+    # smuggling = crime check
+    smugglingSkill = IntegerField(null=False, index=True)
+    leadershipSkill = IntegerField(null=False, index=True)
+    strategySkill = IntegerField(null=False, index=True)
+    medicalSkill = IntegerField(null=False, index=True)
+    trackingSkill = IntegerField(null=False, index=True)
+    survivalSkill = IntegerField(null=False, index=True)
+    trappingSkill = IntegerField(null=False, index=True)
+    slicingSkill = IntegerField(null=False, index=True)
+    engineeringSkill = IntegerField(null=False, index=True)
+
+    # no crafting skill - instead recipe/skill locked
     # craftingSkill = IntegerField(null=False, index=True)
-    # slicingSkill = IntegerField(null=False, index=True)
+    
     # traits = ArrayField(null=False, index=True)
     # languages = ArrayField(null=False, index=True)
     # companions = ArrayField(null=False, index=True)
@@ -59,6 +62,8 @@ class Planet(BaseTable):
 
 class User(Actor):
     id = IntegerField(null=False, default=1, unique=True)
+    forceSensitivity = BooleanField(null=False, index=True)
+    forceSkill = IntegerField(null=False, index=True)
     pass
 
 class PlayerInventory(Item):

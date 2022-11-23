@@ -8,7 +8,7 @@ from consolemenu.items import *
 from Database.schema import *
 
 planetTemplate = "{planet.name}"
-actorTemplate = "{actor.name} {actor.familyName} {actor.race} {actor.homePlanet}"
+actorTemplate = "{actor.name} {actor.age} {actor.familyName} {actor.race} {actor.homePlanet}"
 settleTemplate = "{settlement.name} {settlement.homePlanet}"
 itemTemplate = "{item.name}"
 

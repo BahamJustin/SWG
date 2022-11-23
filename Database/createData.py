@@ -39,6 +39,8 @@ miscItems = (
     ("Golden Tabernacle")
 )
 
+professions = []
+
 factions = (
     ("Galactic Empire"),
     ("Rebel Alliance"),
@@ -94,9 +96,25 @@ def genGalaxy():
             # create star wars name gen
             Actor.create(
             name=names.get_first_name(),
+            age=random.randrange(0, 101),
             familyName=names.get_last_name(),
             race=random.choice(race),
-            homePlanet=planet
+            homePlanet=planet,
+            meleeSkill=random.randrange(0, 101),
+            rangedSkill=random.randrange(0, 101),
+            agilitySkill=random.randrange(0, 101),
+            pilotingSkill=random.randrange(0, 101),
+            stealthSkill=random.randrange(0, 101),
+            tradeSkill=random.randrange(0, 101),
+            smugglingSkill=random.randrange(0, 101),
+            leadershipSkill=random.randrange(0, 101),
+            strategySkill=random.randrange(0, 101),
+            medicalSkill=random.randrange(0, 101),
+            trackingSkill=random.randrange(0, 101),
+            survivalSkill=random.randrange(0, 101),
+            trappingSkill=random.randrange(0, 101),
+            slicingSkill=random.randrange(0, 101),
+            engineeringSkill=random.randrange(0, 101)
             )
 
     for item in miscItems:
@@ -147,9 +165,27 @@ def newUser(name, familyName, race, homePlanet):
     pg_db.drop_tables(PlayerInventory)
     User.create(
         name=name,
+        age=13,
         familyName=familyName,
         race=race,
-        homePlanet=homePlanet
+        homePlanet=homePlanet,
+        forceSensitivity=random.randrange(0, 2),
+        forceSkill=random.randrange(0, 101),
+        meleeSkill=random.randrange(0, 101),
+        rangedSkill=random.randrange(0, 101),
+        agilitySkill=random.randrange(0, 101),
+        pilotingSkill=random.randrange(0, 101),
+        stealthSkill=random.randrange(0, 101),
+        tradeSkill=random.randrange(0, 101),
+        smugglingSkill=random.randrange(0, 101),
+        leadershipSkill=random.randrange(0, 101),
+        strategySkill=random.randrange(0, 101),
+        medicalSkill=random.randrange(0, 101),
+        trackingSkill=random.randrange(0, 101),
+        survivalSkill=random.randrange(0, 101),
+        trappingSkill=random.randrange(0, 101),
+        slicingSkill=random.randrange(0, 101),
+        engineeringSkill=random.randrange(0, 101)
     )
 
     randItems()
@@ -157,12 +193,27 @@ def newUser(name, familyName, race, homePlanet):
     for actor in range(2):
         Actor.create(
             name=names.get_first_name(),
+            age=random.randrange(0, 101),
             familyName=familyName,
             race=race,
             homePlanet=homePlanet,
+            meleeSkill=random.randrange(0, 101),
+            rangedSkill=random.randrange(0, 101),
+            agilitySkill=random.randrange(0, 101),
+            pilotingSkill=random.randrange(0, 101),
+            stealthSkill=random.randrange(0, 101),
+            tradeSkill=random.randrange(0, 101),
+            smugglingSkill=random.randrange(0, 101),
+            leadershipSkill=random.randrange(0, 101),
+            strategySkill=random.randrange(0, 101),
+            medicalSkill=random.randrange(0, 101),
+            trackingSkill=random.randrange(0, 101),
+            survivalSkill=random.randrange(0, 101),
+            trappingSkill=random.randrange(0, 101),
+            slicingSkill=random.randrange(0, 101),
+            engineeringSkill=random.randrange(0, 101)
         )
 
 def newGame():
     newDatabase()
     genGalaxy()
-

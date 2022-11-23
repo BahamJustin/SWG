@@ -8,15 +8,6 @@ from consolemenu.items import *
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-def killDatabase():
-    conn = psycopg2.connect(host='localhost', user='postgres', password='Saints504!')
-    cur = conn.cursor()
-
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-    cur.execute("DROP DATABASE IF EXISTS galaxy")
-
-    conn.close()
-
 def advanceTime():
     # print("-" * 35)
 
@@ -33,4 +24,3 @@ def advanceTime():
     # Screen().input('Press [Enter] to continue')
 
     pg_db.close()
-

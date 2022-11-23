@@ -10,127 +10,10 @@ from consolemenu.items import *
 from Database.createData import *
 from Database.readData import *
 from Database.updateData import *
+from Menus.playerCard import *
+from Menus.relationMenu import *
+from Menus.testMenu import *
 import psycopg2
-
-def progressTime():
-    # enter date into database for a default starting date
-
-    # update date and update database everytime
-    pass 
-
-def devTest():
-    testMenu = input("""
-        1. Advance Time
-        2. Add Inventory
-        3. Remove Inventory
-        4. View Inventory
-        5. Back to Main Menu
-        
-        Choose an option: """)
-
-    if testMenu == "1":
-        advanceTime()
-    elif testMenu == "2":
-        randItems()
-    elif testMenu == "3":
-        pass
-    elif testMenu == "4":
-        getInventory()
-    elif testMenu == "5":
-        pass
-    else:
-        pass
-
-def relationMenu():
-    menu = input("""
-        1. View Family
-        2. Friends/Rivals
-        3. All
-        4. Search
-        5. Back to Main Menu
-        
-        Choose an option: """)
-
-    if menu == "1":
-        print("")
-        viewFamily(Actor.get().familyName)
-    elif menu == "2":
-        pass
-    elif menu == "3":
-        pass
-    elif menu == "4":
-        pass
-    elif menu == "5":
-        pass
-    else:
-        relationMenu()
-
-def actionMenu():
-    menu = input("""
-        1. Skill Training
-        2. Back To Main Menu
-        
-        Choose an option: """)
-    
-    if menu == "1":
-        pass
-    elif menu == "2":
-        pass
-    else:
-        actionMenu()
-
-def planetMenu():
-    menu = input("""
-        1. Starport
-        2. Back To Main Menu
-        
-        Choose an option: """)
-    
-    if menu == "1":
-        pass
-    elif menu == "2":
-        pass
-    else:
-        planetMenu()
-    
-
-def playerCard():
-    # add the rest of the skills
-    userDetails = User.get()
-
-    playerName = userDetails.name
-    playerFamily = userDetails.familyName
-    playerRace = userDetails.race
-    playerHomePlanet = userDetails.homePlanet
-    # more player info - companions?
-    cardString = f"""
-        Name: {playerName} {playerFamily}
-        Race: {playerRace}
-        Home Planet: {playerHomePlanet}"""
-    print(cardString)
-
-    # add an inventory
-    # add equiupment - ability to equip items
-    # check skill numbers
-    charMenu = input("""
-        1. Inventory
-        2. Equipment
-        3. Skills
-        4. Back to Main Menu
-        
-        Choose an option: """)
-
-    if charMenu == "1":
-        getInventory()
-        playerCard()
-    elif charMenu == "2":
-        pass
-    elif charMenu == "3":
-        pass
-    elif charMenu == "4":
-        pass
-    else:
-        playerCard()
 
 def createUser():
     # random gen names
@@ -208,7 +91,7 @@ def main():
     elif choice == "3":
         pass
     elif choice == "D" or choice == "d":
-        devTest()
+        testMenu()
         main()
     elif choice == "N" or choice == "n":
         newGameMenu()
