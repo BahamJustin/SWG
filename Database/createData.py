@@ -26,9 +26,12 @@ race = (
     ("Cathar"),
 )
 
-items = (
+weapons = (
     ("Gun"),
-    ("Lightsaber"),
+    ("Lightsaber")
+)
+
+miscItems = (
     ("Body Pillow"),
     ("iPhone With Flappy Bird"),
     ("gf"),
@@ -50,7 +53,7 @@ events = (
 
 playerinventory = []
 
-models = ([Planet, Settlement, Actor, Item, Faction, Event, User, playerInventory, Date])
+models = ([Planet, Settlement, Actor, Item, Faction, Event, User, PlayerInventory, Date])
 
 def newDatabase():
     conn = psycopg2.connect(host='localhost', user='postgres', password='Saints504!')
@@ -96,9 +99,16 @@ def genGalaxy():
             homePlanet=planet
             )
 
-    for item in items:
+    for item in miscItems:
         Item.create(
-            name=item
+            name=item,
+            itemType = "Misc"
+        )
+
+    for weapon in weapons:
+        Item.create(
+            name=weapon,
+            itemType = "Weapon" 
         )
 
     for faction in factions:
@@ -118,14 +128,32 @@ def genGalaxy():
 
     pg_db.close()
 
+def randItems():
+    # put randmisc into inventory, then view inventory
+    for item in Item.select().where(Item.itemType == "Weapon").order_by(fn.Random()).limit(1):
+        PlayerInventory.create(
+            name=item.name,
+            itemType=item.itemType
+        )
+
+    for item in Item.select().where(Item.itemType == "Misc").order_by(fn.Random()).limit(1):
+        PlayerInventory.create(
+            name=item.name,
+            itemType=item.itemType
+        )
+
 def newUser(name, familyName, race, homePlanet):
     pg_db.drop_tables(User)
+    pg_db.drop_tables(PlayerInventory)
     User.create(
         name=name,
         familyName=familyName,
         race=race,
         homePlanet=homePlanet
     )
+
+    randItems()
+
     for actor in range(2):
         Actor.create(
             name=names.get_first_name(),

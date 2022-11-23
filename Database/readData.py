@@ -57,7 +57,7 @@ def actorsByPlanet(planet):
     pg_db.close()
         
 def viewAllItems():
-    print("All Items")
+    print("All Planets")
     print("-" * 35)
 
     for item in Item.select():
@@ -101,4 +101,10 @@ def getDate():
     print(dateDict.get(dateMonth),",",dateYear,"ABY")
     pg_db.close()
 
+def getInventory():
+    for item in PlayerInventory.select():
+        print(itemTemplate.format(item=item))
+    
+    Screen().input('Press [Enter] to continue')
 
+    pg_db.close()

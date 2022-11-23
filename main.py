@@ -18,6 +18,29 @@ def progressTime():
     # update date and update database everytime
     pass 
 
+def devTest():
+    testMenu = input("""
+        1. Advance Time
+        2. Add Inventory
+        3. Remove Inventory
+        4. View Inventory
+        5. Back to Main Menu
+        
+        Choose an option: """)
+
+    if testMenu == "1":
+        advanceTime()
+    elif testMenu == "2":
+        randItems()
+    elif testMenu == "3":
+        pass
+    elif testMenu == "4":
+        getInventory()
+    elif testMenu == "5":
+        pass
+    else:
+        pass
+
 def relationMenu():
     menu = input("""
         1. View Family
@@ -98,7 +121,8 @@ def playerCard():
         Choose an option: """)
 
     if charMenu == "1":
-        pass
+        getInventory()
+        playerCard()
     elif charMenu == "2":
         pass
     elif charMenu == "3":
@@ -167,8 +191,9 @@ def main():
     choice = input("""
         1. My Character
         2. Relationships
-        3. Actions/advance time
+        3. Actions
         4. Planet
+        D: Dev Test
         N. New Game?
         Q: Exit Game
 
@@ -181,7 +206,9 @@ def main():
         relationMenu()
         main()
     elif choice == "3":
-        advanceTime()
+        pass
+    elif choice == "D" or choice == "d":
+        devTest()
         main()
     elif choice == "N" or choice == "n":
         newGameMenu()

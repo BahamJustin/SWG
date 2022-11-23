@@ -15,7 +15,7 @@ class Settlement(BaseTable):
     homePlanet = CharField(null=False, index=True)
 
 class Item(BaseTable):
-    pass
+    itemType = CharField(null=False, index=True)
 
 class Faction(BaseTable):
     pass
@@ -61,7 +61,7 @@ class User(Actor):
     id = IntegerField(null=False, default=1, unique=True)
     pass
 
-class playerInventory(Item):
+class PlayerInventory(Item):
     pass
 
 class Companion(Actor):
