@@ -5,6 +5,7 @@ from os import *
 import random
 import names
 import psycopg2
+from skills import *
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 def randNum():
@@ -26,17 +27,13 @@ race = (
     ("Cathar"),
 )
 
-weapons = (
-    ("Gun"),
-    ("Lightsaber")
-)
-
-miscItems = (
-    ("Body Pillow"),
-    ("iPhone With Flappy Bird"),
-    ("gf"),
-    ("PSP"),
-    ("Golden Tabernacle")
+# turn into json files?
+# skills json (dont have to update in database)
+items = (
+    ("Body Pillow", "Misc", randSkill()),
+    ("iPhone With Flappy Bird", "Misc", randSkill()),
+    ("Gun", "Weapon", randSkill()),
+    ("Lightsaber", "Weapon", randSkill())
 )
 
 professions = []
@@ -117,16 +114,11 @@ def genGalaxy():
             engineeringSkill=random.randrange(0, 101)
             )
 
-    for item in miscItems:
+    for item in items:
         Item.create(
-            name=item,
-            itemType = "Misc"
-        )
-
-    for weapon in weapons:
-        Item.create(
-            name=weapon,
-            itemType = "Weapon" 
+            name=item[0],
+            itemType = item[1],
+            bonusSkill=item[2]
         )
 
     for faction in factions:
@@ -151,13 +143,15 @@ def randItems():
     for item in Item.select().where(Item.itemType == "Weapon").order_by(fn.Random()).limit(1):
         PlayerInventory.create(
             name=item.name,
-            itemType=item.itemType
+            itemType=item.itemType,
+            bonusSkill=item.bonusSkill
         )
 
     for item in Item.select().where(Item.itemType == "Misc").order_by(fn.Random()).limit(1):
         PlayerInventory.create(
             name=item.name,
-            itemType=item.itemType
+            itemType=item.itemType,
+            bonusSkill=item.bonusSkill
         )
 
 def newUser(name, familyName, race, homePlanet):

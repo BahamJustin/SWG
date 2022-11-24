@@ -16,6 +16,9 @@ class Settlement(BaseTable):
 
 class Item(BaseTable):
     itemType = CharField(null=False, index=True)
+    bonusSkill = CharField(null=True, index=True)
+
+    # bonusTrait = CharField(null=True, index=True)
 
 class Faction(BaseTable):
     pass
