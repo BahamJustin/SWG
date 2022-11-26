@@ -58,7 +58,7 @@ def newGameMenu():
         print("dumbass")
         newGameMenu()
 
-def main():
+def homeMenu():
     print("")
     print("S.W.G")
     print("")
@@ -67,7 +67,7 @@ def main():
     except:
         pass
 
-    # Current situation Info on main screen
+    # Current situation Info on homeMenu screen
 
     # Settlement menu - locations
     #  Action menu?
@@ -84,23 +84,23 @@ def main():
 
     if choice == "1":
         playerCard()
-        main()
+        homeMenu()
     elif choice == "2":
         relationMenu()
-        main()
+        homeMenu()
     elif choice == "3":
         pass
     elif choice == "D" or choice == "d":
         testMenu()
-        main()
+        homeMenu()
     elif choice == "N" or choice == "n":
         newGameMenu()
-        main()
+        homeMenu()
     elif choice == "q" or choice == "Q":
         pass
     else:
         print("dumbass")
-        main()
+        homeMenu()
 
 def databaseExist():
     connection = None
@@ -120,16 +120,20 @@ def databaseExist():
 
         if ("galaxy",) in list_database:
             print("Galaxy Loaded")
-            main()
+            homeMenu()
         else:
             print("Starting a new game")
             newGame()
             createUser()
-            main()
+            homeMenu()
         connection.close()
 
 def startGame():
     print("Checking for Galaxy")
     databaseExist()
 
-startGame()
+def main():
+   pass
+
+if __name__ == '__main__':
+    main()
