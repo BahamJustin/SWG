@@ -78,10 +78,9 @@ def viewFamily(familyName):
 
     pg_db.close()
 
-def getDate():
-    dateDetails = Date.get()
-    dateMonth = dateDetails.month
-    dateYear = dateDetails.year
+class getDate:
+    dateMonth = Date.get().month
+    dateYear = Date.get().year
 
     dateDict = {
         1: "1st",
@@ -98,8 +97,10 @@ def getDate():
         12: "12th"
     }
 
-    print(dateDict.get(dateMonth),",",dateYear,"ABY")
+    # print(dateDict.get(dateMonth),",",dateYear,"ABY")
+    dateString = "%s, %d ABY"%(dateDict.get(dateMonth), dateYear)
     pg_db.close()
+
 
 def getInventory():
     for item in PlayerInventory.select():

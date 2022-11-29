@@ -1,1 +1,72 @@
-MainWidget:
+WindowManager:
+    # LoadWindow:
+    MainWindow:
+    NewGameMenu:
+
+<LoadWindow>:
+    name: "load"
+
+<MainWindow>:
+    name: "main"
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: root.gameDate
+            size_hint: 1, .25
+        StackLayout:
+            orientation: "lr-tb"
+            padding: ("20dp", "20dp")
+            spacing: ("20dp", "10dp")
+            size_hint: (1, 1)
+            Button:
+                text: "Character Menu"
+                size_hint: 1, None
+            Button:
+                text: "Relation Menu"
+                size_hint: 1, None
+            Button:
+                text: "Action Menu"
+                size_hint: 1, None
+            Button:
+                text: "Planet Menu"
+                size_hint: 1, None
+            Button:
+                text: "Dev Menu"
+                size_hint: 1, None
+            Button:
+                text: "New Game"
+                size_hint: 1, None
+                on_release: 
+                    app.root.current = "newGame"
+                    root.manager.transition.direction = "left"
+            Button:
+                text: "Exit Game"
+                size_hint: 1, None
+                on_release: app.stop()
+
+
+<NewGameMenu>:
+    name: "newGame"
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Are you sure you want to start a new game?"
+            size_hint: 1, .25
+        StackLayout:
+            orientation: "lr-tb"
+            padding: ("20dp", "20dp")
+            spacing: ("20dp", "10dp")
+            size_hint: (1, 1)
+            Button:
+                text: "Yes"
+                size_hint: 1, None
+                on_release: 
+                    root.on_button_click(self)
+                    app.root.current = "main"
+                    root.manager.transition.direction = "right"
+            Button:
+                text: "No"
+                size_hint: 1, None
+                on_release:
+                    app.root.current = "main"
+                    root.manager.transition.direction = "right"

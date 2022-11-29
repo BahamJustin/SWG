@@ -132,8 +132,14 @@ def startGame():
     print("Checking for Galaxy")
     databaseExist()
 
+def kivyTest():
+    try:
+        getDate()
+    except:
+        pass
+
 def main():
    pass
 
 if __name__ == '__main__':
-    main()
+    startGame()
