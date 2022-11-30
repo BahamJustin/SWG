@@ -11,9 +11,6 @@ from consolemenu.items import *
 from Database.createData import *
 from Database.readData import *
 from Database.updateData import *
-from Menus.playerCard import *
-from Menus.relationMenu import *
-from Menus.testMenu import *
 import psycopg2
 from kivy.app import App
 from kivy.core.window import Window
@@ -29,18 +26,34 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.stacklayout import StackLayout
 
 Window.size = (720, 1080)
+
+class CharacterMenu(Screen):
+    pass
+
+class RelationshipMenu(Screen):
+    pass
+
+class ActionMenu(Screen):
+    pass
+
+class PlanetMenu(Screen):
+    pass
         
+class DevTestMenu(Screen):
+    def devAdvanceTime(self):
+        advanceTime()
+
 class NewGameMenu(Screen):
-    def on_button_click(self, widget):
-        print("button clicked")
-        if widget.text == "Yes":
-            newGame()
-        else:
-            pass
+    def startNewGame(self):
+        newGame()
 
 # Main Menu - Stack layout
-class MainWindow(Screen):
-    gameDate = StringProperty(getDate.dateString)
+class MainMenu(Screen):
+    gameDate = StringProperty(getDate())
+    def on_pre_enter(self, *largs):
+        newDate = getDate()
+        print(newDate)
+        self.gameDate = newDate
 
 # Progress bar on botttom, lore skyrim style on top of progress bar, load icon in middle, when done, pull up main window
 class LoadWindow(Screen):

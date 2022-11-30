@@ -78,7 +78,7 @@ def viewFamily(familyName):
 
     pg_db.close()
 
-class getDate:
+def getDate():
     dateMonth = Date.get().month
     dateYear = Date.get().year
 
@@ -99,7 +99,10 @@ class getDate:
 
     # print(dateDict.get(dateMonth),",",dateYear,"ABY")
     dateString = "%s, %d ABY"%(dateDict.get(dateMonth), dateYear)
+    
     pg_db.close()
+
+    return dateString
 
 
 def getInventory():

@@ -8,7 +8,7 @@ from consolemenu.items import *
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-def advanceTime(self):
+def advanceTime():
     # print("-" * 35)
 
     if Date.get().month >= 12:
