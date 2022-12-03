@@ -118,7 +118,7 @@ def databaseExist():
 
         list_database = cur.fetchall()
 
-        if ("galaxy",) in list_database:
+        if ("galaxy") in list_database:
             print("Galaxy Loaded")
             homeMenu()
         else:

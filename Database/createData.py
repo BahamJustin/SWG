@@ -59,7 +59,7 @@ def newDatabase():
     cur = conn.cursor()
 
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-    cur.execute("DROP DATABASE IF EXISTS galaxy")
+    cur.execute("DROP TABLE IF EXISTS Planet, Settlement, Actor, Item, Faction, Event, User, PlayerInventory, Date")
     cur.execute('CREATE DATABASE galaxy')
 
     conn.close()
@@ -209,5 +209,5 @@ def newUser(name, familyName, race, homePlanet):
         )
 
 def newGame():
-    newDatabase()
+    # newDatabase()
     genGalaxy()

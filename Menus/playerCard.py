@@ -44,6 +44,7 @@ def skillMenu():
 
     pg_db.close()
 
+
 def playerCard():
     # add player skills, then item skill bonuses, then equipment, add skill bonuses
     user = User.get_by_id(1)

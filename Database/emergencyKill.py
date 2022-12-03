@@ -1,5 +1,5 @@
 import os
-from schema import *
+from Database.schema import *
 from os import *
 import random
 import names
@@ -13,8 +13,5 @@ def killDatabase():
     cur = conn.cursor()
 
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-    cur.execute("DROP DATABASE IF EXISTS galaxy")
-
+    cur.execute("DROP TABLE IF EXISTS Planet, Settlement, Actor, Item, Faction, Event, User, PlayerInventory, Date")
     conn.close()
-
-killDatabase()
