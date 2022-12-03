@@ -60,11 +60,19 @@ class NewGameMenu(Screen):
 
 # Main Menu - Stack layout - variables dont update anymore??????
 class MainMenu(Screen):
-    try:
-        gameDate = StringProperty(getDate())
-        userName = User.get().name
-    except:
-        pass
+    gameDate = StringProperty(getDate())
+    userName = User.get().name
+
+
+    def getMainInfo(self, *largs):
+        try:
+            newDate = getDate()
+            newName = User.get().name
+            self.gameDate = newDate
+
+            self.userName = newName
+        except:
+            pass
         # pg_db.close()
 
 # Progress bar on botttom, lore skyrim style on top of progress bar, load icon in middle, when done, pull up main window
