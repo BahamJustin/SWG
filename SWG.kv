@@ -1,5 +1,5 @@
 WindowManager:
-    # LoadWindow:
+    LoadWindow:
     MainMenu:
     NewGameMenu:
     CreateUserMenu:
@@ -11,11 +11,11 @@ WindowManager:
 
 <LoadWindow>:
     name: "load"
-    on_pre_enter: root.getLoadInfo()
+    on_pre_enter: root.getLoadInfo(self)
     BoxLayout:
         orientation: "vertical"
         Label:
-            text: root.userName + " Loaded" if root.userExists == True else "No Game Loaded"
+            text: root.userName + " Loaded" if root.userExists == False else "No Game Loaded"
             size_hint: 1, .1
         BoxLayout:
             orientation: "horizontal"
@@ -86,7 +86,7 @@ WindowManager:
                 text: "Exit Game"
                 size_hint: 1, .1
                 on_release: 
-                    app.root.current = "newGame"
+                    app.root.current = "load"
                     root.manager.transition.direction = "left"
 
 <NewGameMenu>:
