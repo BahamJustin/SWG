@@ -1,5 +1,5 @@
 WindowManager:
-    LoadWindow:
+    TitleWindow:
     MainMenu:
     NewGameMenu:
     CreateUserMenu:
@@ -9,13 +9,14 @@ WindowManager:
     ActionMenu:
     PlanetMenu:
 
-<LoadWindow>:
-    name: "load"
-    on_pre_enter: root.getLoadInfo(self)
+<TitleWindow>:
+    name: "title"
+    on_pre_enter: root.getTitleInfo(self)
     BoxLayout:
         orientation: "vertical"
         Label:
-            text: root.userName + " Loaded" if root.userExists == False else "No Game Loaded"
+            text: root.userName + " Loaded" 
+            # if root.userExists == True else "No Game Loaded"
             size_hint: 1, .1
         BoxLayout:
             orientation: "horizontal"
@@ -32,12 +33,16 @@ WindowManager:
                 text: "Load Game"
                 size_hint: 1, None
                 on_release:
-                    app.root.current = "main" if root.userExists == True else "load"
+                    app.root.current = "main" if root.userExists == True else "title"
                     root.manager.transition.direction = "right"
             Button:
                 text: "Exit Game"
                 size_hint: 1, .1
                 on_release: app.stop()
+            Button:
+                text: "smd"
+                size_hint: 1, .1
+                on_release: root.killDB()
 
 <MainMenu>:
     name: "main"
@@ -86,7 +91,7 @@ WindowManager:
                 text: "Exit Game"
                 size_hint: 1, .1
                 on_release: 
-                    app.root.current = "load"
+                    app.root.current = "title"
                     root.manager.transition.direction = "left"
 
 <NewGameMenu>:
@@ -112,7 +117,7 @@ WindowManager:
                 text: "No"
                 size_hint: 1, None
                 on_release:
-                    app.root.current = "load"
+                    app.root.current = "title"
                     root.manager.transition.direction = "right"
 
 <CreateUserMenu>:
