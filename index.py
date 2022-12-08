@@ -13,6 +13,7 @@ from Database.readData import *
 from Database.updateData import *
 from Database.emergencyKill import killDatabase
 import psycopg2
+from playhouse.shortcuts import *
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
