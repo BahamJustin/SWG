@@ -53,19 +53,32 @@ class EquipmentScreen(Screen):
 # grid with no bottom - scroll - different pages for each item type
 
 class InventoryStack(StackLayout):
+    instance = None
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        InventoryStack.instance = self
+        # for i in PlayerInventory.select():
+        #     size = dp(100)
+        #     dictItem = model_to_dict(i) 
+        #     print(dictItem['name'])
+        #     invButton = Button(text=dictItem['name'], size_hint=(None, None), size=(size, size))
+        #     self.add_widget(invButton)
+        # print("-" * 35)
+
+    def viewInventory(self):
+        self.clear_widgets()
         for i in PlayerInventory.select():
             size = dp(100)
             dictItem = model_to_dict(i) 
+            print(dictItem['name'])
             invButton = Button(text=dictItem['name'], size_hint=(None, None), size=(size, size))
             self.add_widget(invButton)
-
-    def add(self):
-        pass
+        print("-" * 35)
         
 class InventoryScreen(Screen):
-    pass        
+    def updateInv(self, *largs):
+        InventoryStack.instance.viewInventory()        
 
 class SkillScreen(Screen):
     skillInfo = f"""

@@ -318,6 +318,7 @@ WindowManager:
                 root.manager.transition.direction = "right"
 
 <InventoryScreen>:
+    on_pre_enter: root.updateInv(self)
     name: "inventory" 
     BoxLayout:
         orientation: "vertical"
@@ -333,7 +334,7 @@ WindowManager:
                 root.manager.transition.direction = "right"
 
 <ScrollInventory@ScrollView>:
-    InventoryStack:
+    InventoryStack: 
         size_hint: 1, None
         height: self.minimum_height     
 
