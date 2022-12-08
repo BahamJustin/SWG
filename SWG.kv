@@ -8,6 +8,9 @@ WindowManager:
     RelationshipMenu:
     ActionMenu:
     PlanetMenu:
+    SkillScreen:
+    InventoryScreen:
+    EquipmentScreen:
 
 <TitleWindow>:
     name: "title"
@@ -37,12 +40,12 @@ WindowManager:
                     root.manager.transition.direction = "right"
             Button:
                 text: "Exit Game"
-                size_hint: 1, .1
+                size_hint: 1, None
                 on_release: app.stop()
-            Button:
-                text: "smd"
-                size_hint: 1, .1
-                on_release: root.killDB()
+            # Button:
+                # text: "smd"
+                # size_hint: 1, None
+                # on_release: root.killDB()
 
 <MainMenu>:
     name: "main"
@@ -169,6 +172,13 @@ WindowManager:
                     app.root.current = "main"
                     root.manager.transition.direction = "right"
             Button:
+                text: "Add Inventory"
+                size_hint: 1, None
+                on_release: 
+                    root.addInventory()
+                    app.root.current = "main"
+                    root.manager.transition.direction = "right"
+            Button:
                 text: "Go Back"
                 size_hint: 1, None
                 on_release:
@@ -257,20 +267,79 @@ WindowManager:
         Label:
             text: "Character Menu"
             size_hint: 1, .25
+        Label: 
+            text: root.playerInfo
+            size_hint: 1, .25
         StackLayout:
             orientation: "lr-tb"
             padding: ("20dp", "20dp")
             spacing: ("20dp", "10dp")
             size_hint: (1, 1)
             Button:
-                text: "Character"
+                text: "Inventory"
+                size_hint: 1, None
+                on_release: 
+                    app.root.current = "inventory"
+                    root.manager.transition.direction = "left"
+            Button:
+                text: "Equipment"
                 size_hint: 1, None
                 on_release: 
                     app.root.current = "main"
                     root.manager.transition.direction = "right"
             Button:
-                text: "Go Back"
+                text: "Skills"
+                size_hint: 1, None
+                on_release: 
+                    app.root.current = "skills"
+                    root.manager.transition.direction = "left"
+            Button:
+                text: "Back to Main Menu"
                 size_hint: 1, None
                 on_release:
                     app.root.current = "main"
                     root.manager.transition.direction = "right"
+
+<SkillScreen>:
+    name: "skills"
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Player Skills"
+            size_hint: 1, .25
+        Label: 
+            text: root.skillInfo
+            size_hint: 1, .25
+        Button:
+            text: "Back to Character"
+            size_hint: 1, None
+            on_release:
+                app.root.current = "CharacterOptions"
+                root.manager.transition.direction = "right"
+
+<InventoryScreen>:
+    name: "inventory" 
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Player Inventory"
+            size_hint: 1, .25
+        ScrollInventory:
+        Button:
+            text: "Back to Character"
+            size_hint: 1, None
+            on_release:
+                app.root.current = "CharacterOptions"
+                root.manager.transition.direction = "right"
+
+<ScrollInventory@ScrollView>:
+    InventoryStack:
+        size_hint: 1, None
+        height: self.minimum_height     
+
+<InventoryStack>:
+    orientation: "lr-tb"
+    padding: ("20dp", "20dp")
+    spacing: "20dp", "20dp"
+
+<EquipmentScreen>:

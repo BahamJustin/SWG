@@ -20,16 +20,76 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.metrics import dp
 from kivy.uix.widget import Widget
 from kivy.uix.button import Button
-from kivy.properties import StringProperty, BooleanProperty
+from kivy.uix.label import Label
+from kivy.properties import StringProperty, ListProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.stacklayout import StackLayout
+from kivy.uix.recycleview import RecycleView
 
 Window.size = (414, 736)
 
-class CharacterMenu(Screen):
+class WindowManager(ScreenManager):
     pass
+
+wm = WindowManager()
+
+class PlayerInfo:
+    try:
+            user = User.get()
+    except:
+            pass
+
+    if user.forceSensitivity == 1:
+        playerForceSense = "Yes"
+    else:
+        playerForceSense = "No"
+
+class EquipmentScreen(Screen):
+    pass
+
+# grid with no bottom - scroll - different pages for each item type
+
+class InventoryStack(StackLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        for i in PlayerInventory.select():
+            size = dp(100)
+            dictItem = model_to_dict(i) 
+            invButton = Button(text=dictItem['name'], size_hint=(None, None), size=(size, size))
+            self.add_widget(invButton)
+
+    def add(self):
+        pass
+        
+class InventoryScreen(Screen):
+    pass        
+
+class SkillScreen(Screen):
+    skillInfo = f"""
+        Force Sensitivty: {PlayerInfo.playerForceSense}
+        Force Skill: {PlayerInfo.user.forceSkill}
+        Melee: {PlayerInfo.user.meleeSkill}
+        Ranged: {PlayerInfo.user.rangedSkill}
+        Agility: {PlayerInfo.user.agilitySkill}
+        Piloting: {PlayerInfo.user.pilotingSkill}
+        Stealth: {PlayerInfo.user.stealthSkill}
+        Trade: {PlayerInfo.user.tradeSkill}
+        Smuggling: {PlayerInfo.user.smugglingSkill}
+        Leadership: {PlayerInfo.user.leadershipSkill}
+        Strategy: {PlayerInfo.user.strategySkill}
+        Medical: {PlayerInfo.user.medicalSkill}
+        Tracking: {PlayerInfo.user.trackingSkill}
+        Slicing: {PlayerInfo.user.slicingSkill}
+        Engineering: {PlayerInfo.user.engineeringSkill}"""
+
+class CharacterMenu(Screen):
+    playerInfo = f"""
+    Name: {PlayerInfo.user.name} {PlayerInfo.user.familyName} 
+    Age: {PlayerInfo.user.age}                     
+    Race: {PlayerInfo.user.race}
+    Home Planet: {PlayerInfo.user.homePlanet}"""
 
 class RelationshipMenu(Screen):
     pass
@@ -43,6 +103,9 @@ class PlanetMenu(Screen):
 class DevTestMenu(Screen):
     def devAdvanceTime(self):
         advanceTime()
+    
+    def addInventory(self):
+        randItems()
 
 class CreateUserMenu(Screen):
     userName = StringProperty("UserName")
@@ -78,7 +141,7 @@ class MainMenu(Screen):
 # Progress bar on botttom, lore skyrim style on top of progress bar, load icon in middle, when done, pull up main window
 class TitleWindow(Screen):
     try:
-        userName = StringProperty(User.get().name)
+        userName = StringProperty(PlayerInfo.user.name)
         userExists = True
     except:
         userName = "No Game"
@@ -94,33 +157,8 @@ class TitleWindow(Screen):
     def killDB(self):
         killDatabase()
 
-class WindowManager(ScreenManager):
-    pass
-
-kv = Builder.load_file("SWG.kv")
-
 class SWGApp(App):
     pass
-    # connection = None
-    # try:
-    #     connection = psycopg2.connect(host='localhost', user='postgres', password='Saints504!')
-    # except:
-    #     print('Database not connected.')
-
-    # if connection is not None:
-    #     connection.autocommit = True
-
-    #     cur = connection.cursor()
-
-    #     cur.execute("SELECT datname FROM pg_database;")
-
-    #     list_database = cur.fetchall()
-
-    #     if ("galaxy") in list_database:
-    #         print("Galaxy Loaded")
-    #     else:
-    #         print("Starting a new game")
-    #     connection.close()
 
 if __name__ == "__main__":
     SWGApp().run()
