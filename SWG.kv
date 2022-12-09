@@ -11,6 +11,7 @@ WindowManager:
     SkillScreen:
     InventoryScreen:
     EquipmentScreen:
+    ItemDesc:
 
 <TitleWindow>:
     name: "title"
@@ -319,6 +320,18 @@ WindowManager:
                 app.root.current = "CharacterOptions"
                 root.manager.transition.direction = "right"
 
+<ItemDesc>:
+    name: "ids"
+    BoxLayout:
+        Label:
+            text: root.itemDescName
+        Button:
+            text: "Back to Inventory"
+            size_hint: 1, None
+            on_release:
+                app.root.current = "InventoryScreen"
+                root.manager.transition.direction = "right"
+
 <InventoryScreen>:
     on_pre_enter: root.updateInv(self)
     name: "inventory" 
@@ -327,7 +340,28 @@ WindowManager:
         Label:
             text: "Player Inventory"
             size_hint: 1, .25
-        ScrollInventory:
+        InvTabs:
+            size_hint: 1, .5
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            do_default_tab: False
+            TabbedPanelItem:
+                text: 'Weapons'
+                ScrollScreen:
+                    WeaponStack: 
+                        size_hint: 1, None
+                        height: self.minimum_height  
+                        orientation: "lr-tb"
+                        padding: ("20dp", "20dp")
+                        spacing: "20dp", "20dp"
+            TabbedPanelItem:
+                text: "Misc"
+                ScrollScreen:
+                    MiscStack: 
+                        size_hint: 1, None
+                        height: self.minimum_height  
+                        orientation: "lr-tb"
+                        padding: ("20dp", "20dp")
+                        spacing: "20dp", "20dp"
         Button:
             text: "Back to Character"
             size_hint: 1, None
@@ -335,14 +369,6 @@ WindowManager:
                 app.root.current = "CharacterOptions"
                 root.manager.transition.direction = "right"
 
-<ScrollInventory@ScrollView>:
-    InventoryStack: 
-        size_hint: 1, None
-        height: self.minimum_height     
-
-<InventoryStack>:
-    orientation: "lr-tb"
-    padding: ("20dp", "20dp")
-    spacing: "20dp", "20dp"
+<ScrollScreen@ScrollView>:   
 
 <EquipmentScreen>:

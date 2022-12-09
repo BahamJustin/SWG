@@ -163,7 +163,7 @@ def newUser(name, familyName, race, homePlanet):
     pg_db.drop_tables(PlayerInventory)
     User.create(
         name=name,
-        age=13,
+        age=20,
         familyName=familyName,
         race=race,
         homePlanet=homePlanet,

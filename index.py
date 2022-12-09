@@ -1,10 +1,6 @@
 from main import *
 from peewee import *
 from pathlib import Path
-import csv
-import sys
-import os
-import random
 from consolemenu import *
 from consolemenu import SelectionMenu
 from consolemenu.items import *
@@ -12,22 +8,16 @@ from Database.createData import *
 from Database.readData import *
 from Database.updateData import *
 from Database.emergencyKill import killDatabase
-import psycopg2
 from playhouse.shortcuts import *
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.metrics import dp
-from kivy.uix.widget import Widget
 from kivy.uix.button import Button
-from kivy.uix.label import Label
 from kivy.properties import StringProperty, ListProperty
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.anchorlayout import AnchorLayout
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.stacklayout import StackLayout
-from kivy.uix.recycleview import RecycleView
+from kivy.uix.tabbedpanel import TabbedPanel, TabbedPanelHeader
 
 Window.size = (414, 736)
 
@@ -35,32 +25,91 @@ class WindowManager(ScreenManager):
     pass
 
 wm = WindowManager()
+app= App.get_running_app()
 
 class EquipmentScreen(Screen):
     ### Be able to equip items to different equipment slots - equipment affects stats
     pass
 
-class InventoryStack(StackLayout):
-    ### Different "pages"? for each item type - Click Item to see Item Description Screen
+class ItemDesc(Screen):
+    instance = None
+    itemDescName = StringProperty()
+    itemDescType = StringProperty()
+    itemDescSkill = StringProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        ItemDesc.instance = self
+
+
+
+    def viewItem(self, name):
+        focusItem = PlayerInventory.get(PlayerInventory.name == name)
+        self.itemDescName = focusItem.name
+        self.itemDescType = focusItem.itemType
+        self.itemDescSkill = focusItem.bonusSkill
+
+class WeaponStack(StackLayout):
+    ### Click Item to see Item Description Screen
+    instance = None
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        WeaponStack.instance = self
+
+    def viewScreen(self):
+        try:
+            wm.current = "ids"
+            print("it works?")
+        except:
+            print("FUCK")
+
+    def viewWeapons(self):
+        self.clear_widgets()
+        for i in PlayerInventory.select().where(PlayerInventory.itemType == "Weapon"):
+            size = dp(100)
+            dictItem = model_to_dict(i) 
+            # print(dictItem['name'])
+            invButton = Button(text=dictItem['name'], size_hint=(None, None), size=(size, size))
+            self.add_widget(invButton)
+            invButton.bind(on_release=lambda x:ItemDesc.instance.viewItem(dictItem['name']))
+            invButton.bind(on_press=lambda x:self.viewScreen())
+        # print("-" * 35)
+
+class MiscStack(StackLayout):
     instance = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        InventoryStack.instance = self
+        MiscStack.instance = self
 
-    def viewInventory(self):
+    def viewMisc(self):
         self.clear_widgets()
-        for i in PlayerInventory.select():
+        for i in PlayerInventory.select().where(PlayerInventory.itemType == "Misc"):
             size = dp(100)
             dictItem = model_to_dict(i) 
-            print(dictItem['name'])
+            # print(dictItem['name'])
             invButton = Button(text=dictItem['name'], size_hint=(None, None), size=(size, size))
             self.add_widget(invButton)
-        print("-" * 35)
-        
+            invButton.bind(on_release=lambda x:ItemDesc.instance.viewItem(dictItem['name']))
+        # print("-" * 35)
+
+    ### Try to combine all stacks using an id to call specific categories
+    # def viewMisc(self, category):
+    #     self.clear_widgets()
+    #     for i in PlayerInventory.select().where(PlayerInventory.itemType == category):
+    #         size = dp(100)
+    #         dictItem = model_to_dict(i) 
+    #         # print(dictItem['name'])
+    #         invButton = Button(text=dictItem['name'], size_hint=(None, None), size=(size, size))
+    #         self.add_widget(invButton)
+
+class InvTabs(TabbedPanel):
+    pass
+
 class InventoryScreen(Screen):
     def updateInv(self, *largs):
-        InventoryStack.instance.viewInventory()        
+        WeaponStack.instance.viewWeapons()
+        MiscStack.instance.viewMisc()    
 
 class SkillScreen(Screen):
     skillInfo = StringProperty()
@@ -177,6 +226,8 @@ class TitleWindow(Screen):
 
     def killDB(self):
         killDatabase()
+
+wm.add_widget(ItemDesc(name="ids"))
 
 class SWGApp(App):
     pass
