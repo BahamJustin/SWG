@@ -121,16 +121,19 @@ def genGalaxy():
             bonusSkill=item[2]
         )
 
+    ### Create Factions
     for faction in factions:
         Faction.create(
             name=faction
         )
 
+    ### Write Events
     for event in events:
         Event.create(
             name=event
         )
 
+    ### Finalize Timeline
     Date.create(
         month=1,
         year=4
@@ -140,6 +143,7 @@ def genGalaxy():
 
 def randItems():
     # put randmisc into inventory, then view inventory
+    ### Specific Items given for differnet starts
     for item in Item.select().where(Item.itemType == "Weapon").order_by(fn.Random()).limit(1):
         PlayerInventory.create(
             name=item.name,
@@ -163,6 +167,7 @@ def newUser(name, familyName, race, homePlanet):
         familyName=familyName,
         race=race,
         homePlanet=homePlanet,
+        ### Different Starts grant different stats
         forceSensitivity=random.randrange(0, 2),
         forceSkill=random.randrange(0, 101),
         meleeSkill=random.randrange(0, 101),
@@ -184,6 +189,7 @@ def newUser(name, familyName, race, homePlanet):
 
     randItems()
 
+    ### Specific family relationships
     for actor in range(2):
         Actor.create(
             name=names.get_first_name(),

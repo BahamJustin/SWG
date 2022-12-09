@@ -36,35 +36,17 @@ class WindowManager(ScreenManager):
 
 wm = WindowManager()
 
-class PlayerInfo:
-    try:
-            user = User.get()
-    except:
-            pass
-
-    if user.forceSensitivity == 1:
-        playerForceSense = "Yes"
-    else:
-        playerForceSense = "No"
-
 class EquipmentScreen(Screen):
+    ### Be able to equip items to different equipment slots - equipment affects stats
     pass
 
-# grid with no bottom - scroll - different pages for each item type
-
 class InventoryStack(StackLayout):
+    ### Different "pages"? for each item type - Click Item to see Item Description Screen
     instance = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         InventoryStack.instance = self
-        # for i in PlayerInventory.select():
-        #     size = dp(100)
-        #     dictItem = model_to_dict(i) 
-        #     print(dictItem['name'])
-        #     invButton = Button(text=dictItem['name'], size_hint=(None, None), size=(size, size))
-        #     self.add_widget(invButton)
-        # print("-" * 35)
 
     def viewInventory(self):
         self.clear_widgets()
@@ -81,37 +63,54 @@ class InventoryScreen(Screen):
         InventoryStack.instance.viewInventory()        
 
 class SkillScreen(Screen):
-    skillInfo = f"""
-        Force Sensitivty: {PlayerInfo.playerForceSense}
-        Force Skill: {PlayerInfo.user.forceSkill}
-        Melee: {PlayerInfo.user.meleeSkill}
-        Ranged: {PlayerInfo.user.rangedSkill}
-        Agility: {PlayerInfo.user.agilitySkill}
-        Piloting: {PlayerInfo.user.pilotingSkill}
-        Stealth: {PlayerInfo.user.stealthSkill}
-        Trade: {PlayerInfo.user.tradeSkill}
-        Smuggling: {PlayerInfo.user.smugglingSkill}
-        Leadership: {PlayerInfo.user.leadershipSkill}
-        Strategy: {PlayerInfo.user.strategySkill}
-        Medical: {PlayerInfo.user.medicalSkill}
-        Tracking: {PlayerInfo.user.trackingSkill}
-        Slicing: {PlayerInfo.user.slicingSkill}
-        Engineering: {PlayerInfo.user.engineeringSkill}"""
+    skillInfo = StringProperty()
+
+    def getSkillInfo(self, *largs):
+        if User.get().forceSensitivity == 1:
+            playerForceSense = "Yes"
+        else:
+            playerForceSense = "No"
+
+        self.skillInfo = f"""
+        Force Sensitivty: {playerForceSense}
+        Force Skill: {User.get().forceSkill}
+        Melee: {User.get().meleeSkill}
+        Ranged: {User.get().rangedSkill}
+        Agility: {User.get().agilitySkill}
+        Piloting: {User.get().pilotingSkill}
+        Stealth: {User.get().stealthSkill}
+        Trade: {User.get().tradeSkill}
+        Smuggling: {User.get().smugglingSkill}
+        Leadership: {User.get().leadershipSkill}
+        Strategy: {User.get().strategySkill}
+        Medical: {User.get().medicalSkill}
+        Tracking: {User.get().trackingSkill}
+        Slicing: {User.get().slicingSkill}
+        Engineering: {User.get().engineeringSkill}"""
 
 class CharacterMenu(Screen):
-    playerInfo = f"""
-    Name: {PlayerInfo.user.name} {PlayerInfo.user.familyName} 
-    Age: {PlayerInfo.user.age}                     
-    Race: {PlayerInfo.user.race}
-    Home Planet: {PlayerInfo.user.homePlanet}"""
+    playerInfo = StringProperty()
+
+    def getCharacterInfo(self, *largs):
+        self.playerInfo = f"""
+        Name: {User.get().name} {User.get().familyName} 
+        Age: {User.get().age}                     
+        Race: {User.get().race}
+        Home Planet: {User.get().homePlanet}"""
+
 
 class RelationshipMenu(Screen):
+    ### Display actors - Family, Friends, Rivals, By relation, By Planet, etc.
+    ### Companions - Rivals
+    ### First need to assign relations, design relation score, companion systems
     pass
 
 class ActionMenu(Screen):
+    ### Training, Jobs, 
     pass
 
 class PlanetMenu(Screen):
+    ### View Inhabitants, Visit other settlements, visit settlement locations
     pass
         
 class DevTestMenu(Screen):
@@ -121,13 +120,21 @@ class DevTestMenu(Screen):
     def addInventory(self):
         randItems()
 
+class EventScreen(Screen):
+    ### See new events happen, View Event History
+    ### Current Galactic CLimate Screens? - current tensions, attacks, news, factions
+    ### 
+    pass
+
 class CreateUserMenu(Screen):
+    ### Can only enter first name currently
     userName = StringProperty("UserName")
     familyName = StringProperty("FamName")
     userRace = StringProperty("Race")
     userHome = StringProperty("Home Planet")
 
     def on_text_validate(self, widget):
+        ### clear text box
         self.userName = widget.text
         newUser(self.userName, self.familyName, self.userRace, self.userHome)
 
@@ -135,8 +142,8 @@ class NewGameMenu(Screen):
     def startNewGame(self):
         newGame()
 
-# Main Menu - Stack layout
 class MainMenu(Screen):
+    ### Display current planet Info etc.
     try:
         gameDate = StringProperty(getDate())
         userName = StringProperty(User.get().name)
@@ -152,10 +159,10 @@ class MainMenu(Screen):
             pass
         # pg_db.close()
 
-# Progress bar on botttom, lore skyrim style on top of progress bar, load icon in middle, when done, pull up main window
 class TitleWindow(Screen):
+    ### Progress bar on botttom, lore skyrim style on top of progress bar, load icon in middle, when done, pull up main window
     try:
-        userName = StringProperty(PlayerInfo.user.name)
+        userName = StringProperty(User.get().name)
         userExists = True
     except:
         userName = "No Game"

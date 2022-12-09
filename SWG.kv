@@ -262,6 +262,7 @@ WindowManager:
 
 <CharacterMenu>:
     name: "CharacterOptions"
+    on_pre_enter: root.getCharacterInfo(self)
     BoxLayout:
         orientation: "vertical"
         Label:
@@ -302,6 +303,7 @@ WindowManager:
 
 <SkillScreen>:
     name: "skills"
+    on_pre_enter: root.getSkillInfo(self)
     BoxLayout:
         orientation: "vertical"
         Label:
